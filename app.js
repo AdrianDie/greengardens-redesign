@@ -33,29 +33,6 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
-// Contact form -> mailto fallback
-const form = document.getElementById('kontakt-form');
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const navn = form.navn.value.trim();
-  const epost = form.epost.value.trim();
-  const telefon = form.telefon.value.trim();
-  const adresse = form.adresse.value.trim();
-  const melding = form.melding.value.trim();
-
-  const body = [
-    `Navn: ${navn}`,
-    `E-post: ${epost}`,
-    telefon ? `Telefon: ${telefon}` : null,
-    adresse ? `Adresse: ${adresse}` : null,
-    '',
-    melding
-  ].filter(Boolean).join('\n');
-
-  const mailto = `mailto:kontakt@greengardens.no?subject=${encodeURIComponent('Forespørsel fra greengardens.no')}&body=${encodeURIComponent(body)}`;
-  window.location.href = mailto;
-});
-
 // GSAP scroll reveals
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
@@ -112,8 +89,12 @@ if (window.gsap && window.ScrollTrigger) {
       });
     });
 
-    gsap.from('.kontakt-form', {
+    gsap.from('.kontakt-info', {
       opacity: 0, y: 24, duration: 0.9, ease: 'expo.out',
+      scrollTrigger: { trigger: '.kontakt-grid', start: 'top 85%' }
+    });
+    gsap.from('.map-frame', {
+      opacity: 0, y: 24, duration: 0.9, ease: 'expo.out', delay: 0.1,
       scrollTrigger: { trigger: '.kontakt-grid', start: 'top 85%' }
     });
 
